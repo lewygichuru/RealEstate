@@ -1,0 +1,17 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "Spatie",
+    "Activitylog",
+    "commentable",
+    "monthname",
+    "minprice",
+    "maxprice",
+    "minarea",
+    "maxarea",
+    "sqft",
+    "bedroomdistinct",
+    "bathroomdistinct"
+  ]
+}
