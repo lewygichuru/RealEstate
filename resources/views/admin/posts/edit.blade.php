@@ -24,12 +24,12 @@
                 <input type="text" name="title" value="{{ $post->title }}" class="input w-full" required>
             </fieldset>
             <div class="flex items-center gap-2">
-                <input type="checkbox" id="published" name="status" value="1" class="checkbox checkbox-primary" {{ $post->status ? 'checked' : '' }}>
+                <input type="checkbox" id="published" name="status" value="published" class="checkbox checkbox-primary" {{ $post->status === 'published' ? 'checked' : '' }}>
                 <label for="published" class="label-text cursor-pointer">Published</label>
             </div>
             <fieldset class="fieldset">
                 <legend class="fieldset-legend">Body</legend>
-                <textarea name="body" id="tinymce" class="textarea w-full min-h-48">{{ $post->body }}</textarea>
+                <textarea name="content" id="tinymce" class="textarea w-full min-h-48">{{ old('content', $post->content) }}</textarea>
             </fieldset>
         </div>
     </div>
@@ -39,24 +39,24 @@
             <h2 class="card-title text-base">Post Options</h2>
             <fieldset class="fieldset">
                 <legend class="fieldset-legend">Categories</legend>
-                <select name="categories[]" multiple class="select w-full h-28">
+                <select name="categories[]" multiple class="select w-full h-28" required>
                     @foreach($categories as $category)
-                        <option value="{{ $category->id }}" {{ in_array($category->id, $selectedCategories) ? 'selected' : '' }}>{{ $category->name }}</option>
+                        <option value="{{ $category->id }}" {{ in_array($category->id, old('categories', $selectedCategories)) ? 'selected' : '' }}>{{ $category->name }}</option>
                     @endforeach
                 </select>
             </fieldset>
             <fieldset class="fieldset">
                 <legend class="fieldset-legend">Tags</legend>
-                <select name="tags[]" multiple class="select w-full h-28">
+                <select name="tags[]" multiple class="select w-full h-28" required>
                     @foreach($tags as $tag)
-                        <option value="{{ $tag->id }}" {{ in_array($tag->id, $selectedTags) ? 'selected' : '' }}>{{ $tag->name }}</option>
+                        <option value="{{ $tag->id }}" {{ in_array($tag->id, old('tags', $selectedTags)) ? 'selected' : '' }}>{{ $tag->name }}</option>
                     @endforeach
                 </select>
             </fieldset>
             <fieldset class="fieldset">
                 <legend class="fieldset-legend">Featured Image</legend>
-                @if(Storage::disk('public')->exists('posts/'.$post->image))
-                    <img src="{{ Storage::url('posts/'.$post->image) }}" alt="{{ $post->title }}" class="h-20 rounded-box object-cover mb-2">
+                @if($post->featured_image && Storage::disk('public')->exists('posts/'.$post->featured_image))
+                    <img src="{{ Storage::url('posts/'.$post->featured_image) }}" alt="{{ $post->title }}" class="h-20 rounded-box object-cover mb-2">
                 @endif
                 <input type="file" name="image" accept=".png,.jpg,.jpeg" class="file-input w-full">
             </fieldset>

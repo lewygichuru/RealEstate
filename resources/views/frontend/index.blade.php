@@ -21,6 +21,7 @@
 </section>
 
 {{-- FEATURED PROPERTIES --}}
+@if($properties->count())
 <section class="py-16">
     <div class="container mx-auto px-4">
         <div class="flex items-center justify-between mb-8">
@@ -79,6 +80,7 @@
         </div>
     </div>
 </section>
+@endif
 
 {{-- TESTIMONIALS --}}
 @if($testimonials->count())
@@ -94,7 +96,7 @@
                             <img src="{{ Storage::url('testimonial/'.$testimonial->image) }}" alt="{{ $testimonial->name }}">
                         </div>
                     </div>
-                    <p class="text-sm text-base-content/70 italic">"{{ $testimonial->testimonial }}"</p>
+                    <p class="text-sm text-base-content/70 italic">"{{ $testimonial->content }}"</p>
                     <p class="font-semibold text-sm">{{ $testimonial->name }}</p>
                 </div>
             </div>

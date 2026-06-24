@@ -48,4 +48,24 @@ class Message extends Model
     {
         return $this->belongsTo(Inquiry::class);
     }
+
+    public function getNameAttribute()
+    {
+        return $this->inquiry ? $this->inquiry->name : ($this->sender ? $this->sender->name : 'Unknown');
+    }
+
+    public function getEmailAttribute()
+    {
+        return $this->inquiry ? $this->inquiry->email : ($this->sender ? $this->sender->email : 'Unknown');
+    }
+
+    public function getPhoneAttribute()
+    {
+        return $this->inquiry ? $this->inquiry->phone : ($this->sender ? $this->sender->phone : null);
+    }
+
+    public function getMessageAttribute()
+    {
+        return $this->body;
+    }
 }

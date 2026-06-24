@@ -61,6 +61,11 @@ class Property extends Model
         return $this->hasMany(Unit::class);
     }
 
+    public function features()
+    {
+        return $this->belongsToMany(Feature::class);
+    }
+
     public function staff()
     {
         return $this->hasMany(PropertyStaff::class);

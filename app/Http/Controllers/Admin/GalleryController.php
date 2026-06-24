@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
-use Intervention\Image\Laravel\Facades\Image;
+use App\Facades\Image;
 use App\Models\File;
 use App\Models\Album;
 use App\Models\User;
@@ -65,7 +65,7 @@ class GalleryController extends Controller
             foreach ((array) $files as $image) {
                 $imagename = 'gallery-' . $currentDate . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
 
-                $imagegallery = (string) Image::decode($image)->encode();
+                $imagegallery = (string) Image::read($image)->toJpeg();
                 Storage::disk('public')->put('gallery/' . $imagename, $imagegallery);
 
                 File::create([

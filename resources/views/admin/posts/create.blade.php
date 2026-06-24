@@ -20,12 +20,12 @@
                 <input type="text" name="title" value="{{ old('title') }}" class="input w-full" required>
             </fieldset>
             <div class="flex items-center gap-2">
-                <input type="checkbox" id="published" name="status" value="1" class="checkbox checkbox-primary">
+                <input type="checkbox" id="published" name="status" value="published" class="checkbox checkbox-primary">
                 <label for="published" class="label-text cursor-pointer">Published</label>
             </div>
             <fieldset class="fieldset">
                 <legend class="fieldset-legend">Body</legend>
-                <textarea name="body" id="tinymce" class="textarea w-full min-h-48">{{ old('body') }}</textarea>
+                <textarea name="content" id="tinymce" class="textarea w-full min-h-48">{{ old('content') }}</textarea>
             </fieldset>
         </div>
     </div>
@@ -35,17 +35,17 @@
             <h2 class="card-title text-base">Post Options</h2>
             <fieldset class="fieldset">
                 <legend class="fieldset-legend">Categories</legend>
-                <select name="categories[]" multiple class="select w-full h-28">
+                <select name="categories[]" multiple class="select w-full h-28" required>
                     @foreach($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        <option value="{{ $category->id }}" {{ in_array($category->id, old('categories', [])) ? 'selected' : '' }}>{{ $category->name }}</option>
                     @endforeach
                 </select>
             </fieldset>
             <fieldset class="fieldset">
                 <legend class="fieldset-legend">Tags</legend>
-                <select name="tags[]" multiple class="select w-full h-28">
+                <select name="tags[]" multiple class="select w-full h-28" required>
                     @foreach($tags as $tag)
-                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                        <option value="{{ $tag->id }}" {{ in_array($tag->id, old('tags', [])) ? 'selected' : '' }}>{{ $tag->name }}</option>
                     @endforeach
                 </select>
             </fieldset>

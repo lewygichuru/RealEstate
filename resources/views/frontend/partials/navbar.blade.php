@@ -5,8 +5,8 @@
         <div class="flex-1">
             <a href="{{ route('home') }}" class="btn btn-ghost text-xl font-bold gap-1">
                 <span class="material-icons">location_city</span>
-                @if(isset($footersettings[0]) && $footersettings[0]['name'])
-                    {{ $footersettings[0]['name'] }}
+                @if(!empty($footersettings['name']))
+                    {{ $footersettings['name'] }}
                 @else
                     Real Estate
                 @endif

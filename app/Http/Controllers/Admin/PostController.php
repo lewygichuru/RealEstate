@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Intervention\Image\Laravel\Facades\Image;
+use App\Facades\Image;
 use Carbon\Carbon;
 use Brian2694\Toastr\Facades\Toastr;
 
@@ -54,7 +54,7 @@ class PostController extends Controller
             if(!Storage::disk('public')->exists('posts')){
                 Storage::disk('public')->makeDirectory('posts');
             }
-            $postimage = (string) Image::decode($image)->resize(1600, 980)->encode();
+            $postimage = (string) Image::read($image)->resize(1600, 980)->toJpeg();
             Storage::disk('public')->put('posts/'.$imagename, $postimage);
 
         }else{
@@ -126,7 +126,7 @@ class PostController extends Controller
             if(Storage::disk('public')->exists('posts/'.$post->featured_image)){
                 Storage::disk('public')->delete('posts/'.$post->featured_image);
             }
-            $postimage = (string) Image::decode($image)->resize(1600, 980)->encode();
+            $postimage = (string) Image::read($image)->resize(1600, 980)->toJpeg();
             Storage::disk('public')->put('posts/'.$imagename, $postimage);
 
         }else{

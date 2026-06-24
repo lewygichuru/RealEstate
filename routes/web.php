@@ -142,3 +142,5 @@ Route::prefix('user')->name('user.')->middleware(['auth','user'])->group(functio
     Route::delete('message/delete/{id}', [UserDashboardController::class, 'messageDelete'])->name('messages.destroy');
 
 });
+
+Route::get('/debug-sliders', function() { Auth::login(\App\Models\User::first()); try { $sliders = App\Models\Slider::latest('created_at')->get(); return view('admin.sliders.index', compact('sliders'))->render(); } catch (\Throwable $e) { return 'REAL ERROR: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine(); } });

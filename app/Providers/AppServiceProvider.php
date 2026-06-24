@@ -20,7 +20,9 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //
+        $this->app->singleton('image', function ($app) {
+            return new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+        });
     }
 
     public function boot(): void
@@ -44,14 +46,16 @@ class AppServiceProvider extends ServiceProvider
                     ->get(),
                 'categories'   => Category::withCount('posts')->get(),
                 'tags'         => Tag::all(),
-                'archives'     => DB::table('posts')
-                                    ->selectRaw('MONTHNAME(created_at) as month, YEAR(created_at) as year, COUNT(*) as published', [])
-                                    ->where('status', '=', 'published', 'and')
-                                    ->groupBy('year', 'month')
-                                    ->orderByDesc('year')
-                                    ->orderByDesc('month')
-                                    ->get()
-                                    ->map(fn($r) => (array) $r)
+                'archives'     => Post::where('status', 'published')
+                                    ->get(['created_at'])
+                                    ->groupBy(fn($p) => $p->created_at->format('Y-m'))
+                                    ->sortKeysDesc()
+                                    ->map(fn($group) => [
+                                        'month' => $group->first()->created_at->format('F'),
+                                        'year' => $group->first()->created_at->format('Y'),
+                                        'published' => $group->count()
+                                    ])
+                                    ->values()
                                     ->toArray(),
             ]);
         });
@@ -61,7 +65,7 @@ class AppServiceProvider extends ServiceProvider
                 if ($shared === null) {
                     $shared = [
                         'footerproperties' => Schema::hasTable('properties') ? Property::latest('created_at')->take(3)->get() : collect(),
-                        'footersettings'   => Schema::hasTable('settings') ? Setting::all()->toArray() : [],
+                        'footersettings'   => Schema::hasTable('settings') ? Setting::pluck('value', 'key')->toArray() : [],
                         'citylist'         => Schema::hasTable('properties') ? Property::select('city')->distinct()->pluck('city')->map(fn($c) => ucfirst($c))->toArray() : [],
                         'bedroomdistinct'  => Schema::hasTable('units') ? Unit::select('bedrooms as bedroom')->distinct()->orderBy('bedrooms')->get() : collect(),
                         'bathroomdistinct' => Schema::hasTable('units') ? Unit::select('bathrooms as bathroom')->distinct()->orderBy('bathrooms')->get() : collect(),

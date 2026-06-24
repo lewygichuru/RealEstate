@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Intervention\Image\Laravel\Facades\Image;
+use App\Facades\Image;
 use Carbon\Carbon;
 use App\Models\Comment;
 use App\Models\Message;
@@ -60,7 +60,7 @@ class DashboardController extends Controller
             if(Storage::disk('public')->exists('users/'.$user->avatar) && $user->avatar){
                 Storage::disk('public')->delete('users/'.$user->avatar);
             }
-            $userimage = (string) Image::decode($image)->encode();
+            $userimage = (string) Image::read($image)->toJpeg();
             Storage::disk('public')->put('users/'.$imagename, $userimage);
         }
 

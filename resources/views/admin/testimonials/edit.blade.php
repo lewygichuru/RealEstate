@@ -19,7 +19,7 @@
             </fieldset>
             <fieldset class="fieldset">
                 <legend class="fieldset-legend">Testimonial</legend>
-                <textarea name="testimonial" rows="4" class="textarea w-full">{{ $testimonial->testimonial }}</textarea>
+                <textarea name="content" rows="4" class="textarea w-full">{{ $testimonial->content }}</textarea>
             </fieldset>
             <fieldset class="fieldset">
                 <legend class="fieldset-legend">Image</legend>

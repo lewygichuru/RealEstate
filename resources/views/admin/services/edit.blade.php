@@ -28,7 +28,7 @@
             </fieldset>
             <fieldset class="fieldset">
                 <legend class="fieldset-legend">Order</legend>
-                <input type="number" name="service_order" value="{{ $service->service_order }}" class="input w-full" min="1">
+                <input type="number" name="order" value="{{ $service->order }}" class="input w-full" min="1">
             </fieldset>
             <div>
                 <button type="submit" class="btn btn-primary gap-2">

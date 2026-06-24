@@ -16,31 +16,31 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <fieldset class="fieldset">
                     <legend class="fieldset-legend">Site Title</legend>
-                    <input type="text" name="name" value="{{ $settings->name ?? '' }}" class="input w-full">
+                    <input type="text" name="name" value="{{ old('name', $settings['name'] ?? '') }}" class="input w-full">
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="fieldset-legend">Email</legend>
-                    <input type="email" name="email" value="{{ $settings->email ?? '' }}" class="input w-full">
+                    <input type="email" name="email" value="{{ old('email', $settings['email'] ?? '') }}" class="input w-full">
                 </fieldset>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <fieldset class="fieldset">
                     <legend class="fieldset-legend">Phone</legend>
-                    <input type="text" name="phone" value="{{ $settings->phone ?? '' }}" class="input w-full">
+                    <input type="text" name="phone" value="{{ old('phone', $settings['phone'] ?? '') }}" class="input w-full">
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="fieldset-legend">Footer Text</legend>
-                    <input type="text" name="footer" value="{{ $settings->footer ?? '' }}" class="input w-full">
+                    <input type="text" name="footer" value="{{ old('footer', $settings['footer'] ?? '') }}" class="input w-full">
                 </fieldset>
             </div>
             <fieldset class="fieldset">
                 <legend class="fieldset-legend">Address</legend>
-                <input type="text" name="address" value="{{ $settings->address ?? '' }}" class="input w-full">
+                <input type="text" name="address" value="{{ old('address', $settings['address'] ?? '') }}" class="input w-full">
                 <p class="fieldset-label">HTML tags allowed</p>
             </fieldset>
             <fieldset class="fieldset">
                 <legend class="fieldset-legend">About Us</legend>
-                <textarea name="aboutus" rows="4" class="textarea w-full">{{ $settings->aboutus ?? '' }}</textarea>
+                <textarea name="aboutus" rows="4" class="textarea w-full">{{ old('aboutus', $settings['aboutus'] ?? '') }}</textarea>
             </fieldset>
 
             <div class="divider text-sm">Social Links</div>
@@ -48,15 +48,15 @@
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <fieldset class="fieldset">
                     <legend class="fieldset-legend">Facebook</legend>
-                    <input type="text" name="facebook" value="{{ $settings->facebook ?? '' }}" class="input w-full" placeholder="username">
+                    <input type="url" name="facebook" value="{{ old('facebook', $settings['facebook'] ?? '') }}" class="input w-full" placeholder="https://facebook.com/...">
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="fieldset-legend">Twitter</legend>
-                    <input type="text" name="twitter" value="{{ $settings->twitter ?? '' }}" class="input w-full" placeholder="username">
+                    <input type="url" name="twitter" value="{{ old('twitter', $settings['twitter'] ?? '') }}" class="input w-full" placeholder="https://twitter.com/...">
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="fieldset-legend">LinkedIn</legend>
-                    <input type="text" name="linkedin" value="{{ $settings->linkedin ?? '' }}" class="input w-full" placeholder="username">
+                    <input type="url" name="linkedin" value="{{ old('linkedin', $settings['linkedin'] ?? '') }}" class="input w-full" placeholder="https://linkedin.com/in/...">
                 </fieldset>
             </div>
 

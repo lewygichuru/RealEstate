@@ -13,11 +13,11 @@
             <div class="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 @foreach($albums as $album)
                 <a href="{{ route('admin.album.gallery', $album->id) }}" class="card bg-base-200 hover:bg-base-300 transition-colors shadow-sm overflow-hidden">
-                    @if(!empty($album->galleryimages))
-                        @foreach($album->galleryimages as $key => $galleryimage)
+                    @if($album->files->isNotEmpty())
+                        @foreach($album->files as $key => $file)
                             @if($key == 0)
                                 <figure class="h-28 overflow-hidden">
-                                    <img src="{{ Storage::url('gallery/'.$galleryimage->image) }}" alt="{{ $album->name }}" class="w-full h-full object-cover">
+                                    <img src="{{ Storage::url('gallery/'.$file->file_name) }}" alt="{{ $album->title }}" class="w-full h-full object-cover">
                                 </figure>
                             @endif
                         @endforeach
@@ -27,8 +27,8 @@
                         </div>
                     @endif
                     <div class="card-body p-3">
-                        <p class="font-semibold text-sm">{{ $album->name }}</p>
-                        <p class="text-xs text-base-content/50">{{ $album->galleryimages->count() }} images</p>
+                        <p class="font-semibold text-sm">{{ $album->title }}</p>
+                        <p class="text-xs text-base-content/50">{{ $album->files->count() }} images</p>
                     </div>
                 </a>
                 @endforeach

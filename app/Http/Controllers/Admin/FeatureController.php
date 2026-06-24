@@ -32,10 +32,10 @@ class FeatureController extends Controller
             'name' => 'required|unique:features|max:255'
         ]);
 
-        $tag = new Feature();
-        $tag->name = $request->name;
-        $tag->slug = Str::slug($request->name);
-        $tag->save();
+        $feature = new Feature();
+        $feature->name = $request->name;
+        $feature->slug = Str::slug($request->name);
+        $feature->save();
 
         Toastr::success('message', 'Feature created successfully.');
         return redirect()->route('admin.features.index');

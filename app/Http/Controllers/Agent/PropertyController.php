@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Intervention\Image\Laravel\Facades\Image;
+use App\Facades\Image;
 use App\Models\Property;
 use App\Models\Unit;
 use Carbon\Carbon;

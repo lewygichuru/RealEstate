@@ -41,7 +41,9 @@
                     @include('pages.properties.slider')
                 @elseif($property->image && (Storage::disk('public')->exists('property/'.$property->image) || Storage::disk('public')->exists('property/gallery/'.$property->image)))
                     <figure class="rounded-box overflow-hidden">
-                        @php($legacy = Storage::disk('public')->exists('property/'.$property->image) ? 'property/'.$property->image : 'property/gallery/'.$property->image)
+                        @php
+                            $legacy = Storage::disk('public')->exists('property/'.$property->image) ? 'property/'.$property->image : 'property/gallery/'.$property->image;
+                        @endphp
                         <img src="{{ Storage::url($legacy) }}" alt="{{ $property->title }}"
                              class="w-full object-cover max-h-96">
                     </figure>
@@ -266,7 +268,9 @@
                             @foreach($relatedproperty as $rel)
                             <li>
                                 <a href="{{ route('property.show', $rel->slug) }}" class="flex items-center gap-3 hover:text-primary transition-colors">
-                                    @php($relCover = $rel->gallery->first())
+                                    @php
+                                        $relCover = $rel->gallery->first();
+                                    @endphp
                                     @if($relCover)
                                     <div class="w-14 h-10 rounded bg-cover bg-center shrink-0"
                                          style="background-image:url({{ $relCover->file_path }})"></div>

@@ -10,7 +10,7 @@ use App\Models\Unit;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Intervention\Image\Laravel\Facades\Image;
+use App\Facades\Image;
 use Carbon\Carbon;
 use Brian2694\Toastr\Facades\Toastr;
 

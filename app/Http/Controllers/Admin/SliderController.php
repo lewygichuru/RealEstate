@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Laravel\Facades\Image;
+use App\Facades\Image;
 use App\Models\Slider;
 use Carbon\Carbon;
 use Brian2694\Toastr\Facades\Toastr;
@@ -16,9 +16,14 @@ class SliderController extends Controller
 {
     public function index()
     {
-        $sliders = Slider::latest('created_at')->get();
-
-        return view('admin.sliders.index', compact('sliders'));
+        try {
+            $sliders = Slider::latest('created_at')->get();
+            echo view('admin.sliders.index', compact('sliders'))->render();
+            exit;
+        } catch (\Throwable $e) {
+            echo "REAL ERROR: " . $e->getMessage() . " in " . $e->getFile() . " on line " . $e->getLine();
+            exit;
+        }
     }
 
     public function create()
@@ -43,7 +48,7 @@ class SliderController extends Controller
             if(!Storage::disk('public')->exists('slider')){
                 Storage::disk('public')->makeDirectory('slider');
             }
-            $slider = (string) Image::decode($image)->scaleDown(1600, 480)->encode();
+            $slider = (string) Image::read($image)->scaleDown(1600, 480)->toJpeg();
             Storage::disk('public')->put('slider/'.$imagename, $slider);
         }else{
             $imagename = 'default.png';
@@ -91,7 +96,7 @@ class SliderController extends Controller
             if(Storage::disk('public')->exists('slider/'.$slider->image)){
                 Storage::disk('public')->delete('slider/'.$slider->image);
             }
-            $sliderimg = (string) Image::decode($image)->resize(1600, 480)->encode();
+            $sliderimg = (string) Image::read($image)->resize(1600, 480)->toJpeg();
             Storage::disk('public')->put('slider/'.$imagename, $sliderimg);
         }else{
             $imagename = $slider->image;

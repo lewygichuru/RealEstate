@@ -39,7 +39,7 @@
                     <span>Featured Property</span>
                 </label>
                 <fieldset class="fieldset"><legend class="fieldset-legend">Description</legend>
-                    <textarea name="description" id="tinymce" rows="8" class="textarea w-full" required>{{ old('description') }}</textarea>
+                    <textarea name="description" id="tinymce" rows="8" class="textarea w-full">{{ old('description') }}</textarea>
                 </fieldset>
                 @include('partials.property-amenities')
             </div>

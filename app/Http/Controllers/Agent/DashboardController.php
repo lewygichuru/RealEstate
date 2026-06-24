@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Intervention\Image\Laravel\Facades\Image;
+use App\Facades\Image;
 use App\Mail\Contact;
 use Carbon\Carbon;
 use App\Models\Property;
@@ -63,7 +63,7 @@ class DashboardController extends Controller
                 Storage::disk('public')->delete('users/' . $user->avatar);
             }
 
-            $userimage = (string) Image::decode($image)->encode();
+            $userimage = (string) Image::read($image)->toJpeg();
             Storage::disk('public')->put('users/' . $imagename, $userimage);
 
             $user->avatar = $imagename;

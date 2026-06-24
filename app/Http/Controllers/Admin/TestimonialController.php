@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Laravel\Facades\Image;
+use App\Facades\Image;
 use App\Models\Testimonial;
 use Carbon\Carbon;
 use Brian2694\Toastr\Facades\Toastr;
@@ -46,7 +46,7 @@ class TestimonialController extends Controller
             if(!Storage::disk('public')->exists('testimonial')){
                 Storage::disk('public')->makeDirectory('testimonial');
             }
-            $testimonial = (string) Image::decode($image)->resize(160, 160)->encode();
+            $testimonial = (string) Image::read($image)->resize(160, 160)->toJpeg();
             Storage::disk('public')->put('testimonial/'.$imagename, $testimonial);
         }else{
             $imagename = 'default.png';
@@ -97,7 +97,7 @@ class TestimonialController extends Controller
             if(Storage::disk('public')->exists('testimonial/'.$testimonial->avatar)){
                 Storage::disk('public')->delete('testimonial/'.$testimonial->avatar);
             }
-            $testimonialimg = (string) Image::decode($image)->resize(160, 160)->encode();
+            $testimonialimg = (string) Image::read($image)->resize(160, 160)->toJpeg();
             Storage::disk('public')->put('testimonial/'.$imagename, $testimonialimg);
         }else{
             $imagename = $testimonial->avatar;

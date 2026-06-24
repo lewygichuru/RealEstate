@@ -6,8 +6,8 @@
             <div>
                 <h3 class="font-bold text-lg mb-3 uppercase tracking-wide">About Us</h3>
                 <p class="text-base-content/70 text-sm leading-relaxed">
-                    @if(isset($footersettings[0]) && $footersettings[0]['aboutus'])
-                        {{ $footersettings[0]['aboutus'] }}
+                    @if(!empty($footersettings['aboutus']))
+                        {{ $footersettings['aboutus'] }}
                     @else
                         At RealEstate, we connect buyers, sellers, and renters with trusted property listings across prime locations.
                     @endif
@@ -53,21 +53,21 @@
     <div class="border-t border-base-300 bg-base-300">
         <div class="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-2 text-sm text-base-content/70">
             <span>
-                @if(isset($footersettings[0]) && $footersettings[0]['footer'])
-                    {{ $footersettings[0]['footer'] }}
+                @if(!empty($footersettings['footer']))
+                    {{ $footersettings['footer'] }}
                 @else
                     &copy; {{ date('Y') }} Real Estate. All rights reserved.
                 @endif
             </span>
             <div class="flex gap-3">
-                @if(isset($footersettings[0]) && $footersettings[0]['facebook'])
-                    <a href="{{ $footersettings[0]['facebook'] }}" target="_blank" class="hover:text-primary transition-colors font-medium">Facebook</a>
+                @if(!empty($footersettings['facebook']))
+                    <a href="{{ $footersettings['facebook'] }}" target="_blank" class="hover:text-primary transition-colors font-medium">Facebook</a>
                 @endif
-                @if(isset($footersettings[0]) && $footersettings[0]['twitter'])
-                    <a href="{{ $footersettings[0]['twitter'] }}" target="_blank" class="hover:text-primary transition-colors font-medium">Twitter</a>
+                @if(!empty($footersettings['twitter']))
+                    <a href="{{ $footersettings['twitter'] }}" target="_blank" class="hover:text-primary transition-colors font-medium">Twitter</a>
                 @endif
-                @if(isset($footersettings[0]) && $footersettings[0]['linkedin'])
-                    <a href="{{ $footersettings[0]['linkedin'] }}" target="_blank" class="hover:text-primary transition-colors font-medium">LinkedIn</a>
+                @if(!empty($footersettings['linkedin']))
+                    <a href="{{ $footersettings['linkedin'] }}" target="_blank" class="hover:text-primary transition-colors font-medium">LinkedIn</a>
                 @endif
             </div>
         </div>

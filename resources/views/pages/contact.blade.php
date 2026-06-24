@@ -14,7 +14,7 @@
                         <h2 class="card-title">Send a Message</h2>
                         <form id="contact-us" action="" method="POST" class="flex flex-col gap-4">
                             @csrf
-                            <input type="hidden" name="mailto" value="{{ $footersettings[0]['email'] ?? '' }}">
+                            <input type="hidden" name="mailto" value="{{ $footersettings['email'] ?? '' }}">
                             @auth
                                 <input type="hidden" name="user_id" value="{{ auth()->id() }}">
                             @endauth
@@ -64,32 +64,32 @@
                     <div class="card-body gap-6">
                         <h2 class="card-title text-base">Get In Touch</h2>
 
-                        @if(isset($footersettings[0]) && !empty($footersettings[0]['phone']))
+                        @if(!empty($footersettings['phone']))
                         <div class="flex items-start gap-3">
                             <span class="material-icons text-primary mt-0.5">call</span>
                             <div>
                                 <p class="text-xs text-base-content/50 uppercase font-semibold tracking-wide">Call Us Now</p>
-                                <p class="font-semibold">{{ $footersettings[0]['phone'] }}</p>
+                                <p class="font-semibold">{{ $footersettings['phone'] }}</p>
                             </div>
                         </div>
                         @endif
 
-                        @if(isset($footersettings[0]) && !empty($footersettings[0]['email']))
+                        @if(!empty($footersettings['email']))
                         <div class="flex items-start gap-3">
                             <span class="material-icons text-primary mt-0.5">mail</span>
                             <div>
                                 <p class="text-xs text-base-content/50 uppercase font-semibold tracking-wide">Email</p>
-                                <p class="font-semibold">{{ $footersettings[0]['email'] }}</p>
+                                <p class="font-semibold">{{ $footersettings['email'] }}</p>
                             </div>
                         </div>
                         @endif
 
-                        @if(isset($footersettings[0]) && !empty($footersettings[0]['address']))
+                        @if(!empty($footersettings['address']))
                         <div class="flex items-start gap-3">
                             <span class="material-icons text-primary mt-0.5">map</span>
                             <div>
                                 <p class="text-xs text-base-content/50 uppercase font-semibold tracking-wide">Address</p>
-                                <p class="font-semibold">{!! $footersettings[0]['address'] !!}</p>
+                                <p class="font-semibold">{!! $footersettings['address'] !!}</p>
                             </div>
                         </div>
                         @endif
