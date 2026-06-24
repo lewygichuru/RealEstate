@@ -95,11 +95,12 @@
 $(function(){
     var js_properties = <?php echo json_encode($properties); ?>;
     js_properties.data.forEach(function(element) {
+        var avg = 0;
         if (element.rating && element.rating.length) {
             var sum = element.rating.reduce(function(a, b) { return a + parseFloat(b.score || 0); }, 0);
-            var avg = sum / element.rating.length;
-            $("#propertyrating-" + element.id).rateYo({ rating: isNaN(avg) ? 0 : avg, starWidth: "16px", readOnly: true });
+            avg = sum / element.rating.length;
         }
+        $("#propertyrating-" + element.id).rateYo({ rating: isNaN(avg) ? 0 : avg, starWidth: "16px", readOnly: true });
     });
 });
 </script>

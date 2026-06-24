@@ -23,7 +23,7 @@
 <section class="py-16">
     <div class="container mx-auto px-4">
         <div class="flex items-center justify-between mb-8">
-            <h2 class="text-3xl font-bold">Featured Properties</h2>
+            <h2 class="text-3xl font-bold">Recent Properties</h2>
             <a href="<?php echo e(route('property')); ?>" class="btn btn-outline btn-primary btn-sm">View All</a>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -31,9 +31,8 @@
             <div class="card bg-base-100 shadow-sm hover:shadow-md transition-shadow">
                 <figure class="relative h-48 overflow-hidden">
                     <?php ($cover = $property->gallery->first()); ?>
-                    <?php if($cover && $cover->file_path && Storage::disk('public')->exists($cover->file_path)): ?>
-                        <img src="<?php echo e(Storage::url($cover->file_path)); ?>" alt="<?php echo e($property->title); ?>"
-                             class="w-full h-full object-cover">
+                    <?php if($cover): ?>
+                        <img src="<?php echo e($cover->file_path); ?>" alt="<?php echo e($property->title); ?>" class="w-full h-full object-cover">
                     <?php elseif($property->image && (Storage::disk('public')->exists('property/'.$property->image) || Storage::disk('public')->exists('property/gallery/'.$property->image))): ?>
                         <?php ($legacy = Storage::disk('public')->exists('property/'.$property->image) ? 'property/'.$property->image : 'property/gallery/'.$property->image); ?>
                         <img src="<?php echo e(Storage::url($legacy)); ?>" alt="<?php echo e($property->title); ?>"
@@ -58,23 +57,27 @@
 
                         </h3>
                     </a>
-                    <div class="flex items-center gap-1 text-sm text-base-content/60">
-                        <span class="material-icons text-sm">location_city</span>
-                        <?php echo e(ucfirst($property->city)); ?>
-
-                        <span class="mx-1">·</span>
-                        <?php echo e(ucfirst($property->type)); ?> · <?php echo e(ucfirst($property->status)); ?>
-
+                    <div class="flex flex-wrap gap-x-3 gap-y-1 text-sm text-base-content/60">
+                        <span class="flex items-center gap-1"><span class="material-icons text-sm">place</span> <?php echo e(ucfirst($property->city)); ?></span>
+                        <span class="flex items-center gap-1"><span class="material-icons text-sm">home</span> <?php echo e($property->address); ?></span>
                     </div>
-                    <div class="flex items-center justify-between mt-2">
-                        <span class="text-xl font-bold text-primary">Ksh <?php echo e(number_format($property->price)); ?></span>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span class="badge badge-outline badge-sm"><?php echo e(ucfirst($property->type)); ?></span>
+                        <span class="badge badge-outline badge-sm"><?php echo e(ucfirst($property->status)); ?></span>
+                    </div>
+                    <div class="flex items-center justify-between mt-3">
+                        <span class="text-xl font-bold text-primary">
+                            Ksh <?php echo e(number_format($property->price ?? 0)); ?>
+
+                        </span>
                         <div id="propertyrating-<?php echo e($property->id); ?>"></div>
                     </div>
                 </div>
                 <div class="px-4 pb-3 pt-2 border-t border-base-200 flex justify-between text-xs text-base-content/60">
-                    <span class="flex items-center gap-1"><span class="material-icons text-sm">bed</span> <?php echo e($property->bedroom); ?> Bed</span>
-                    <span class="flex items-center gap-1"><span class="material-icons text-sm">bathtub</span> <?php echo e($property->bathroom); ?> Bath</span>
+                    <span class="flex items-center gap-1"><span class="material-icons text-sm">bed</span> <?php echo e($property->bedroom); ?></span>
+                    <span class="flex items-center gap-1"><span class="material-icons text-sm">bathtub</span> <?php echo e($property->bathroom); ?></span>
                     <span class="flex items-center gap-1"><span class="material-icons text-sm">square_foot</span> <?php echo e($property->area); ?> sqft</span>
+                    <span class="flex items-center gap-1"><span class="material-icons text-sm">comment</span> <?php echo e($property->comments_count); ?></span>
                 </div>
             </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -161,13 +164,12 @@
 $(function(){
     var js_properties = <?php echo json_encode($properties); ?>;
     js_properties.forEach(function(element) {
+        var avg = 0;
         if (element.rating && element.rating.length) {
-            var sum = element.rating.reduce(function(a, b) { return a + parseFloat(b.rating); }, 0);
-            var avg = sum / element.rating.length;
-            if (!isNaN(avg)) {
-                $("#propertyrating-" + element.id).rateYo({ rating: avg, starWidth: "16px", readOnly: true });
-            }
+            var sum = element.rating.reduce(function(a, b) { return a + parseFloat(b.score || 0); }, 0);
+            avg = sum / element.rating.length;
         }
+        $("#propertyrating-" + element.id).rateYo({ rating: isNaN(avg) ? 0 : avg, starWidth: "16px", readOnly: true });
     });
 });
 </script>

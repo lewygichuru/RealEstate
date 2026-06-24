@@ -17,7 +17,7 @@ class FrontpageController extends Controller
     {
         $sliders = Schema::hasTable('sliders') ? Slider::latest('created_at')->get() : collect();
 
-        $properties = Schema::hasTable('properties') ? Property::latest('created_at')->where('is_featured', '=', true, 'and')
+        $properties = Schema::hasTable('properties') ? Property::latest('created_at')
             ->with(['rating','units','gallery'])
             ->withCount('comments')
             ->take(6)

@@ -25,10 +25,10 @@
     </fieldset>
     <fieldset class="fieldset">
         <legend class="fieldset-legend">Latitude</legend>
-        <input type="text" name="latitude" class="input w-full" value="{{ old('latitude', $property?->latitude) }}" id="latitude">
+        <input type="text" name="latitude" class="input w-full" value="{{ old('latitude', $property?->latitude ?? '-1.286389') }}" id="latitude">
     </fieldset>
     <fieldset class="fieldset">
         <legend class="fieldset-legend">Longitude</legend>
-        <input type="text" name="longitude" class="input w-full" value="{{ old('longitude', $property?->longitude) }}" id="longitude">
+        <input type="text" name="longitude" class="input w-full" value="{{ old('longitude', $property?->longitude ?? '36.817223') }}" id="longitude">
     </fieldset>
 </div>
