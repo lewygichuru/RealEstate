@@ -27,7 +27,7 @@
                             {!! \Illuminate\Support\Str::limit(strip_tags($post->body), 120) !!}
                         </p>
                         <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-xs text-base-content/50">
-                            <a href="{{ route('blog.author', $post->user->username) }}" class="flex items-center gap-1 hover:text-primary">
+                            <a href="{{ route('blog.author', $post->user->id) }}" class="flex items-center gap-1 hover:text-primary">
                                 <span class="material-icons text-sm">person</span> {{ $post->user->name }}
                             </a>
                             <span class="flex items-center gap-1">

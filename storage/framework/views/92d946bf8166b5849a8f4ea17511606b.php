@@ -140,7 +140,7 @@
                     </p>
                     <div class="flex items-center gap-2 mt-2 text-xs text-base-content/50">
                         <span class="material-icons text-sm">person</span>
-                        <a href="<?php echo e(route('blog.author', $post->user->username)); ?>" class="hover:text-primary">
+                        <a href="<?php echo e(route('blog.author', $post->user->id)); ?>" class="hover:text-primary">
                             <?php echo e($post->user->name); ?>
 
                         </a>

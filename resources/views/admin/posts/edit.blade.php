@@ -19,9 +19,20 @@
                     <span class="material-icons text-sm">arrow_back</span> Back
                 </a>
             </div>
+
+            @if ($errors->any())
+                <div class="alert alert-error mb-4">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <fieldset class="fieldset">
                 <legend class="fieldset-legend">Post Title</legend>
-                <input type="text" name="title" value="{{ $post->title }}" class="input w-full" required>
+                <input type="text" name="title" value="{{ $post->title }}" class="input w-full">
             </fieldset>
             <div class="flex items-center gap-2">
                 <input type="checkbox" id="published" name="status" value="published" class="checkbox checkbox-primary" {{ $post->status === 'published' ? 'checked' : '' }}>
@@ -39,7 +50,7 @@
             <h2 class="card-title text-base">Post Options</h2>
             <fieldset class="fieldset">
                 <legend class="fieldset-legend">Categories</legend>
-                <select name="categories[]" multiple class="select w-full h-28" required>
+                <select name="categories[]" multiple class="select w-full h-28">
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}" {{ in_array($category->id, old('categories', $selectedCategories)) ? 'selected' : '' }}>{{ $category->name }}</option>
                     @endforeach
@@ -47,7 +58,7 @@
             </fieldset>
             <fieldset class="fieldset">
                 <legend class="fieldset-legend">Tags</legend>
-                <select name="tags[]" multiple class="select w-full h-28" required>
+                <select name="tags[]" multiple class="select w-full h-28">
                     @foreach($tags as $tag)
                         <option value="{{ $tag->id }}" {{ in_array($tag->id, old('tags', $selectedTags)) ? 'selected' : '' }}>{{ $tag->name }}</option>
                     @endforeach

@@ -17,7 +17,7 @@
                     <div class="card-body">
                         <h1 class="text-2xl font-bold">{{ $post->title }}</h1>
                         <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-base-content/50 mt-1">
-                            <a href="{{ route('blog.author', $post->user->username) }}" class="flex items-center gap-1 hover:text-primary">
+                            <a href="{{ route('blog.author', $post->user->id) }}" class="flex items-center gap-1 hover:text-primary">
                                 <span class="material-icons text-sm">person</span> {{ $post->user->name }}
                             </a>
                             <span class="flex items-center gap-1">

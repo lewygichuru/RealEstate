@@ -73,7 +73,7 @@
                         <h2 class="card-title text-base">Send a Message</h2>
                         <form class="agent-message-box flex flex-col gap-3 mt-1" action="" method="POST">
                             <?php echo csrf_field(); ?>
-                            <input type="hidden" name="receiver_id" value="<?php echo e($agent->id); ?>">
+                            <input type="hidden" name="agent_id" value="<?php echo e($agent->id); ?>">
                             <input type="hidden" name="user_id" value="<?php echo e(auth()->id()); ?>">
                             <fieldset class="fieldset py-0">
                                 <legend class="fieldset-legend">Name</legend>
