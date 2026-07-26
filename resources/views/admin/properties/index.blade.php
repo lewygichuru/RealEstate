@@ -58,7 +58,7 @@
                             <div class="flex gap-1">
                                 <a href="{{ route('admin.properties.show', $property->id) }}" class="btn btn-success btn-xs"><span class="material-icons text-sm">visibility</span></a>
                                 <a href="{{ route('admin.properties.edit', $property->id) }}" class="btn btn-info btn-xs"><span class="material-icons text-sm">edit</span></a>
-                                <button type="button" class="btn btn-error btn-xs" onclick="deleteProperty({{ $property->id }})"><span class="material-icons text-sm">delete</span></button>
+                                <button type="button" class="btn btn-error btn-xs" onclick="deleteProperty('{{ $property->id }}')"><span class="material-icons text-sm">delete</span></button>
                                 <form action="{{ route('admin.properties.destroy', $property->id) }}" method="POST" id="del-property-{{ $property->id }}" class="hidden">
                                     @csrf @method('DELETE')
                                 </form>
@@ -75,8 +75,19 @@
 @push('scripts')
 <script>
 function deleteProperty(id) {
-    swal({ title: 'Are you sure?', text: "You won't be able to revert this!", icon: 'warning', buttons: ["Cancel", "Yes, delete it!"], dangerMode: true })
-    .then((value) => { if (value) { document.getElementById('del-property-' + id).submit(); } });
+    swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
+            document.getElementById('del-property-' + id).submit();
+        }
+    });
 }
 </script>
 @endpush

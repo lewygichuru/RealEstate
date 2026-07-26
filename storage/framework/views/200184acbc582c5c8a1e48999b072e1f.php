@@ -56,7 +56,7 @@
                             <div class="flex gap-1">
                                 <a href="<?php echo e(route('admin.properties.show', $property->id)); ?>" class="btn btn-success btn-xs"><span class="material-icons text-sm">visibility</span></a>
                                 <a href="<?php echo e(route('admin.properties.edit', $property->id)); ?>" class="btn btn-info btn-xs"><span class="material-icons text-sm">edit</span></a>
-                                <button type="button" class="btn btn-error btn-xs" onclick="deleteProperty(<?php echo e($property->id); ?>)"><span class="material-icons text-sm">delete</span></button>
+                                <button type="button" class="btn btn-error btn-xs" onclick="deleteProperty('<?php echo e($property->id); ?>')"><span class="material-icons text-sm">delete</span></button>
                                 <form action="<?php echo e(route('admin.properties.destroy', $property->id)); ?>" method="POST" id="del-property-<?php echo e($property->id); ?>" class="hidden">
                                     <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
                                 </form>
@@ -73,8 +73,19 @@
 <?php $__env->startPush('scripts'); ?>
 <script>
 function deleteProperty(id) {
-    swal({ title: 'Are you sure?', text: "You won't be able to revert this!", icon: 'warning', buttons: ["Cancel", "Yes, delete it!"], dangerMode: true })
-    .then((value) => { if (value) { document.getElementById('del-property-' + id).submit(); } });
+    swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
+            document.getElementById('del-property-' + id).submit();
+        }
+    });
 }
 </script>
 <?php $__env->stopPush(); ?>

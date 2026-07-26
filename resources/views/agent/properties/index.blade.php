@@ -58,7 +58,7 @@
                                                 <a href="{{ route('agent.properties.edit', $property->id) }}" class="btn btn-warning btn-xs" title="Edit">
                                                     <span class="material-icons text-sm">edit</span>
                                                 </a>
-                                                <button type="button" class="btn btn-error btn-xs" onclick="deleteProperty({{ $property->id }})" title="Delete">
+                                                <button type="button" class="btn btn-error btn-xs" onclick="deleteProperty('{{ $property->id }}')" title="Delete">
                                                     <span class="material-icons text-sm">delete</span>
                                                 </button>
                                                 <form action="{{ route('agent.properties.destroy', $property->id) }}" method="POST" id="del-property-{{ $property->id }}" class="hidden">
