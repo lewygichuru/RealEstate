@@ -23,6 +23,9 @@ class Message extends Model
         'subject',
         'body',
         'read_at',
+        'name',
+        'email',
+        'phone',
     ];
 
     protected $casts = [
@@ -51,16 +54,25 @@ class Message extends Model
 
     public function getNameAttribute()
     {
+        if (!empty($this->attributes['name'])) {
+            return $this->attributes['name'];
+        }
         return $this->inquiry ? $this->inquiry->name : ($this->sender ? $this->sender->name : 'Unknown');
     }
 
     public function getEmailAttribute()
     {
+        if (!empty($this->attributes['email'])) {
+            return $this->attributes['email'];
+        }
         return $this->inquiry ? $this->inquiry->email : ($this->sender ? $this->sender->email : 'Unknown');
     }
 
     public function getPhoneAttribute()
     {
+        if (!empty($this->attributes['phone'])) {
+            return $this->attributes['phone'];
+        }
         return $this->inquiry ? $this->inquiry->phone : ($this->sender ? $this->sender->phone : null);
     }
 

@@ -191,14 +191,20 @@ class PagesController extends Controller
             'status' => 'new',
         ]);
 
-        if (Auth::check()) {
-            Message::create([
-                'sender_id' => Auth::id(),
-                'receiver_id' => $request->receiver_id,
-                'inquiry_id' => $inquiry->id,
-                'subject' => $request->subject,
-                'body' => $request->message,
-            ]);
+        Message::create([
+            'sender_id' => Auth::check() ? Auth::id() : null,
+            'receiver_id' => $request->receiver_id,
+            'inquiry_id' => $inquiry->id,
+            'subject' => $request->subject,
+            'body' => $request->message,
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+        ]);
+
+        $agent = User::find($request->receiver_id);
+        if ($agent) {
+            Mail::to($agent->email)->send(new Contact($request->message, $agent->name, $request->email));
         }
 
         if($request->ajax()){
@@ -225,20 +231,26 @@ class PagesController extends Controller
 
         $message  = $request->message;
         $mailfrom = $request->email;
+        $admin      = User::first();
+        $receiver_id = $admin ? $admin->id : null;
 
-        if (Auth::check()) {
-            Message::create([
-                'sender_id' => Auth::id(),
-                'receiver_id' => User::first(['*'])?->id,
-                'subject' => $request->subject,
-                'body' => $message,
-            ]);
-        }
+        Message::create([
+            'sender_id' => Auth::check() ? Auth::id() : null,
+            'receiver_id' => $receiver_id,
+            'subject' => $request->subject,
+            'body' => $message,
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+        ]);
             
-        $adminname  = User::find(1, ['*'])->name;
-        $mailto     = $request->mailto;
+        $admin      = User::first();
+        $adminname  = $admin ? $admin->name : 'Admin';
+        $mailto     = $request->mailto ?? config('mail.from.address');
 
-        Mail::to($mailto)->send(new Contact($message,$adminname,$mailfrom));
+        if ($mailto) {
+            Mail::to($mailto)->send(new Contact($message,$adminname,$mailfrom));
+        }
 
         if($request->ajax()){
             return response()->json(['message' => 'Message send successfully.']);
