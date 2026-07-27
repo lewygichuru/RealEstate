@@ -236,13 +236,13 @@
                             </div>
                         </td>
                         <td>
-                            <?php ($role = $user->roles->first()); ?>
-                            <?php if($role?->id === 1): ?>
-                                <span class="badge badge-sm badge-error"><?php echo e($role->name); ?></span>
-                            <?php elseif($role?->id === 2): ?>
-                                <span class="badge badge-sm badge-primary"><?php echo e($role->name); ?></span>
+                            <?php ($displayRole = $user->roles->first()?->name ?? $user->type); ?>
+                            <?php if($displayRole === 'admin'): ?>
+                                <span class="badge badge-sm badge-error"><?php echo e($displayRole); ?></span>
+                            <?php elseif($displayRole === 'staff' || $displayRole === 'owner'): ?>
+                                <span class="badge badge-sm badge-primary"><?php echo e($displayRole); ?></span>
                             <?php else: ?>
-                                <span class="badge badge-sm badge-ghost"><?php echo e($role->name ?? 'No role'); ?></span>
+                                <span class="badge badge-sm badge-ghost"><?php echo e($displayRole ?? 'No role'); ?></span>
                             <?php endif; ?>
                         </td>
                         <td class="text-xs text-base-content/50"><?php echo e($user->created_at->diffForHumans()); ?></td>

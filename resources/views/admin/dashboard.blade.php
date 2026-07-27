@@ -238,13 +238,13 @@
                             </div>
                         </td>
                         <td>
-                            @php($role = $user->roles->first())
-                            @if($role?->id === 1)
-                                <span class="badge badge-sm badge-error">{{ $role->name }}</span>
-                            @elseif($role?->id === 2)
-                                <span class="badge badge-sm badge-primary">{{ $role->name }}</span>
+                            @php($displayRole = $user->roles->first()?->name ?? $user->type)
+                            @if($displayRole === 'admin')
+                                <span class="badge badge-sm badge-error">{{ $displayRole }}</span>
+                            @elseif($displayRole === 'staff' || $displayRole === 'owner')
+                                <span class="badge badge-sm badge-primary">{{ $displayRole }}</span>
                             @else
-                                <span class="badge badge-sm badge-ghost">{{ $role->name ?? 'No role' }}</span>
+                                <span class="badge badge-sm badge-ghost">{{ $displayRole ?? 'No role' }}</span>
                             @endif
                         </td>
                         <td class="text-xs text-base-content/50">{{ $user->created_at->diffForHumans() }}</td>

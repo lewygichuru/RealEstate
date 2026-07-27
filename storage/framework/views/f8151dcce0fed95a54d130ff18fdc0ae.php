@@ -27,7 +27,7 @@
 
                         </p>
                         <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-xs text-base-content/50">
-                            <a href="<?php echo e(route('blog.author', $post->user->username)); ?>" class="flex items-center gap-1 hover:text-primary">
+                            <a href="<?php echo e(route('blog.author', $post->user->id)); ?>" class="flex items-center gap-1 hover:text-primary">
                                 <span class="material-icons text-sm">person</span> <?php echo e($post->user->name); ?>
 
                             </a>
