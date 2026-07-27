@@ -61,6 +61,59 @@
                     </div>
 
                 </div>
+
+                <div class="grid grid-cols-1 mt-4">
+                    <div class="card bg-base-100 shadow-sm">
+                        <div class="card-body p-0">
+                            <div class="px-4 py-3 border-b border-base-200">
+                                <h2 class="font-bold text-sm uppercase tracking-wide">Recent Comments</h2>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Comment</th>
+                                            <th>Status</th>
+                                            <th>Author</th>
+                                            <th>When</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $__empty_1 = true; $__currentLoopData = $comments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                        <tr>
+                                            <td class="max-w-44">
+                                                <p class="text-sm truncate" title="<?php echo e($comment->body); ?>"><?php echo e(\Illuminate\Support\Str::limit($comment->body, 35)); ?></p>
+                                            </td>
+                                            <td>
+                                                <?php if($comment->approved == 1): ?>
+                                                    <span class="badge badge-success badge-sm">Approved</span>
+                                                <?php else: ?>
+                                                    <span class="badge badge-warning badge-sm">Pending</span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <div class="flex items-center gap-2">
+                                                    <div class="avatar placeholder">
+                                                        <div class="bg-accent text-accent-content rounded-full w-7">
+                                                            <span class="text-xs"><?php echo e(strtoupper(substr($comment->user?->name ?? 'U', 0, 1))); ?></span>
+                                                        </div>
+                                                    </div>
+                                                    <span class="text-sm"><?php echo e($comment->user ? strtok($comment->user->name, ' ') : 'Unknown'); ?></span>
+                                                </div>
+                                            </td>
+                                            <td class="text-xs text-base-content/50"><?php echo e($comment->created_at->diffForHumans()); ?></td>
+                                        </tr>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                        <tr>
+                                            <td colspan="4" class="text-center text-sm py-4 text-base-content/50">No recent comments found.</td>
+                                        </tr>
+                                        <?php endif; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>

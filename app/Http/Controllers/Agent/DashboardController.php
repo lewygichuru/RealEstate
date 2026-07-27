@@ -27,7 +27,18 @@ class DashboardController extends Controller
         $messages      = Message::latest('created_at')->where('receiver_id', '=', Auth::id(), 'and')->take(5)->get();
         $messagetotal  = Message::where('receiver_id', '=', Auth::id(), 'and')->whereNull('read_at')->count('*');
 
-        return view('agent.dashboard',compact('properties','propertytotal','messages','messagetotal'));
+        $comments = \App\Models\Comment::latest('created_at')->with('user', 'commentable')
+            ->whereHasMorph('commentable', [\App\Models\Property::class, \App\Models\Post::class], function ($query, $type) {
+                if ($type === \App\Models\Property::class) {
+                    $query->where('owner_id', Auth::id());
+                } elseif ($type === \App\Models\Post::class) {
+                    $query->where('user_id', Auth::id());
+                }
+            })
+            ->take(5)
+            ->get();
+
+        return view('agent.dashboard',compact('properties','propertytotal','messages','messagetotal','comments'));
     }
 
     public function profile()

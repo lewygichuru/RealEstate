@@ -41,7 +41,7 @@ class DashboardController extends Controller
         $properties   = Schema::hasTable('properties') ? Property::latest('created_at')->with('user')->take(5)->get() : collect();
         $posts        = Schema::hasTable('posts') ? Post::latest('created_at')->with('user')->withCount('comments')->take(5)->get() : collect();
         $users        = Schema::hasTable('users') ? User::latest('created_at')->with('roles')->take(5)->get() : collect();
-        $comments     = Schema::hasTable('comments') ? Comment::with('user')->take(5)->get() : collect();
+        $comments     = Schema::hasTable('comments') ? Comment::latest('created_at')->with('user')->take(5)->get() : collect();
 
         return view('admin.dashboard', compact(
             'propertycount', 'postcount', 'commentcount', 'usercount',
