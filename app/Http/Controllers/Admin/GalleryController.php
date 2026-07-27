@@ -35,6 +35,44 @@ class GalleryController extends Controller
         return back();
     }
 
+    public function albumEdit(string $id)
+    {
+        $album = Album::findOrFail($id);
+        return view('admin.galleries.album-edit', compact('album'));
+    }
+
+    public function albumUpdate(Request $request, string $id)
+    {
+        $album = Album::findOrFail($id);
+        
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+        
+        $album->title = $request->name;
+        $album->save();
+        
+        Toastr::success('message', 'Album updated successfully.');
+        return redirect()->route('admin.album');
+    }
+
+    public function albumDestroy(string $id)
+    {
+        $album = Album::findOrFail($id);
+        
+        foreach($album->files as $file) {
+            if(Storage::disk('public')->exists('gallery/'.$file->file_name)) {
+                Storage::disk('public')->delete('gallery/'.$file->file_name);
+            }
+            $file->delete();
+        }
+        
+        $album->delete();
+        
+        Toastr::success('message', 'Album deleted successfully.');
+        return back();
+    }
+
 
     public function albumGallery(string $id)
     {

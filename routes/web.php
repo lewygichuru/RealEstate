@@ -82,6 +82,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','admin'])->group(func
 
     Route::get('galleries/album', [GalleryController::class, 'album'])->name('album');
     Route::post('galleries/album/store', [GalleryController::class, 'albumStore'])->name('album.store');
+    Route::get('galleries/album/{id}/edit', [GalleryController::class, 'albumEdit'])->name('album.edit');
+    Route::put('galleries/album/{id}', [GalleryController::class, 'albumUpdate'])->name('album.update');
+    Route::delete('galleries/album/{id}', [GalleryController::class, 'albumDestroy'])->name('album.destroy');
+    
     Route::get('galleries/{id}/gallery', [GalleryController::class, 'albumGallery'])->name('album.gallery');
     Route::post('galleries', [GalleryController::class, 'Gallerystore'])->name('galleries.store');
 
