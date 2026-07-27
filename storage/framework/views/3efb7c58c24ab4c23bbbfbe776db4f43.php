@@ -37,15 +37,15 @@
                         <img src="<?php echo e(Storage::url('users/'.auth()->user()->image)); ?>"
                              class="w-7 h-7 rounded-full object-cover ring-2 ring-white/40"
                              alt="<?php echo e(auth()->user()->name); ?>">
-                        <span class="hidden md:inline text-sm"><?php echo e(ucfirst(auth()->user()->username)); ?></span>
+                        <span class="hidden md:inline text-sm"><?php echo e(ucfirst(strtok(auth()->user()->name, ' '))); ?></span>
                         <span class="material-icons text-sm">arrow_drop_down</span>
                     </div>
                     <ul tabindex="0" class="dropdown-content menu menu-sm bg-base-100 text-base-content rounded-box shadow-xl w-48 mt-2 z-50">
-                        <?php if(auth()->user()->hasRole('admin')): ?>
+                        <?php if(auth()->user()->type === 'admin' || auth()->user()->hasRole('admin')): ?>
                             <li><a href="<?php echo e(route('admin.dashboard')); ?>"><span class="material-icons text-sm">dashboard</span> Dashboard</a></li>
-                        <?php elseif(auth()->user()->hasRole('staff')): ?>
+                        <?php elseif(in_array(auth()->user()->type, ['staff', 'owner']) || auth()->user()->hasRole('staff') || auth()->user()->hasRole('owner')): ?>
                             <li><a href="<?php echo e(route('agent.dashboard')); ?>"><span class="material-icons text-sm">dashboard</span> Dashboard</a></li>
-                        <?php elseif(auth()->user()->hasRole('tenant')): ?>
+                        <?php else: ?>
                             <li><a href="<?php echo e(route('user.dashboard')); ?>"><span class="material-icons text-sm">dashboard</span> Dashboard</a></li>
                         <?php endif; ?>
                         <li class="divider m-0"></li>
